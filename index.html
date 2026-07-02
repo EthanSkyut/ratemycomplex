@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RateMyComplex — Real Reviews for Apartments &amp; Landlords</title>
+<meta name="description" content="Find honest, verified reviews of apartment complexes and landlords before you sign a lease. Built by renters, for renters.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%F0%9F%8F%A0</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="demo-banner" id="demoBanner">
+  <span>🚧 Demo preview — every complex, landlord, and review shown here is sample placeholder data, not a real business.</span>
+  <button id="dismissBanner" aria-label="Dismiss banner">✕</button>
+</div>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="#top" class="logo">Rate<span>My</span>Complex</a>
+    <nav class="main-nav">
+      <a href="#browse">Browse Complexes</a>
+      <a href="#landlords">Landlords</a>
+      <a href="#how-it-works">How It Works</a>
+      <a href="#about">About</a>
+    </nav>
+    <div class="header-actions">
+      <button class="btn btn-ghost" id="signInBtn" type="button">Sign In</button>
+      <button class="btn btn-primary" id="headerWriteReview" type="button">Write a Review</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="container hero-inner">
+    <h1>Know what you're moving into<span class="accent">.</span></h1>
+    <p>Real reviews from real renters on apartment complexes — and the landlords behind them — so you don't find out the hard way.</p>
+    <form class="hero-search" id="heroSearch">
+      <input type="text" id="heroSearchInput" placeholder="Search a complex, address, or neighborhood (try “Provo” or “BYU”)" aria-label="Search complexes">
+      <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+    <div class="hero-stats" id="heroStats"></div>
+  </div>
+</section>
+
+<main>
+
+  <section class="browse-section" id="browse">
+    <div class="container">
+      <div class="section-heading">
+        <h2>Browse complexes near BYU &amp; Provo, UT</h2>
+        <p>This preview focuses on the Provo area — more cities and campuses coming soon.</p>
+      </div>
+
+      <div class="filters" id="filters">
+        <input type="text" id="listSearch" placeholder="Filter by name or address..." aria-label="Filter listings">
+        <select id="sortSelect" aria-label="Sort listings">
+          <option value="rating">Highest Rated</option>
+          <option value="reviews">Most Reviewed</option>
+          <option value="price">Price: Low to High</option>
+          <option value="name">Name A–Z</option>
+        </select>
+        <div class="rating-chips" id="ratingChips">
+          <button class="chip active" data-min="0" type="button">All Ratings</button>
+          <button class="chip" data-min="4.5" type="button">4.5+</button>
+          <button class="chip" data-min="4" type="button">4.0+</button>
+          <button class="chip" data-min="3" type="button">3.0+</button>
+        </div>
+      </div>
+
+      <div class="browse-grid">
+        <div class="map-wrap">
+          <div id="map"></div>
+        </div>
+        <div class="listing-wrap" id="listingWrap"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="landlord-section" id="landlords">
+    <div class="container">
+      <div class="section-heading">
+        <h2>Landlord &amp; property manager ratings</h2>
+        <p>A complex can get a fresh coat of paint. A landlord's reputation follows them across every property — so we rate both, separately.</p>
+      </div>
+      <div class="landlord-grid" id="landlordGrid"></div>
+    </div>
+  </section>
+
+  <section class="how-section" id="how-it-works">
+    <div class="container">
+      <div class="section-heading">
+        <h2>How RateMyComplex works</h2>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <h3>Search your area</h3>
+          <p>Pull up the map and see every complex near you, color-coded by rating.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <h3>Read verified renter reviews</h3>
+          <p>See what actual residents say about maintenance, management, and the landlord — not just the leasing office tour.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <h3>Rate your own experience</h3>
+          <p>Post anonymously if you want. Help the next renter avoid a bad lease — or find a great one.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-section" id="about">
+    <div class="container about-inner">
+      <h2>Why we built this</h2>
+      <p>Finding a place to live shouldn't feel like gambling. Between sketchy listings, unresponsive landlords, and deposits that mysteriously never come back, renters — especially students — get burned constantly, with no way to know what they're walking into beforehand. RateMyComplex started in one college town to fix that, and we're building it out for renters everywhere.</p>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container cta-inner">
+      <div>
+        <h2>Manage a property?</h2>
+        <p>Claim your listing to respond to reviews and keep your info accurate.</p>
+      </div>
+      <button class="btn btn-secondary" id="claimListingBtn" type="button">Claim Your Listing</button>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <a href="#top" class="logo">Rate<span>My</span>Complex</a>
+      <p>Built for BYU renters — and everyone else who's ever signed a lease and hoped for the best.</p>
+    </div>
+    <div class="footer-cols">
+      <div>
+        <h4>Product</h4>
+        <a href="#browse">Browse Complexes</a>
+        <a href="#landlords">Landlords</a>
+        <a href="#how-it-works">How It Works</a>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <a href="#about">About</a>
+        <a href="#">Contact</a>
+        <a href="#">Careers</a>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <a href="#">Terms of Service</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Review Guidelines</a>
+      </div>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <p>© 2026 RateMyComplex. All reviews reflect the opinions of individual users, not RateMyComplex.</p>
+    <button id="resetDemoData" class="link-btn" type="button">Reset demo reviews</button>
+  </div>
+</footer>
+
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+    <div class="modal-content" id="modalContent"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
